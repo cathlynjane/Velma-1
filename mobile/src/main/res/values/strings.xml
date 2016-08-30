@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">VelmaLatest</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="btn_logout_from_google">Logout from Google</string>
+    <string name="btn_revoke_access">Revoke Access</string>
+    <string name="server_client_id">425990936783-jcnl877ns4kjehm725vav9ueeu0ng7j9.apps.googleusercontent.com</string>
+    <string name="logout">Logout</string>
+
+    <string name="event_name">Event Name</string>
+    <string name="addevent">Title</string>
+    <string name="addlocation">Location</string>
+    <string name="submit_event">Save Event</string>
+    <string name="enter_startdate">Start Date</string>
+    <string name="enter_enddate">End Date</string>
+    <string name="enter_starttime">Start Time</string>
+    <string name="enter_endtime">End Time</string>
+    <string name="test_event">test event</string>
+    <string name="eventdesc">Description</string>Enter Event/string>
+    <string name="alarm_every">Alarm every ...</string>
+    <string name="welcome_text">Welcome to Velma</string>
+</resources>

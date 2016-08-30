@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "425990936783",
+    "project_id": "velmalatest"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:425990936783:android:b03013251e19cbf9",
+        "android_client_info": {
+          "package_name": "velmalatest.garciano.com.velmalatest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "425990936783-jcnl877ns4kjehm725vav9ueeu0ng7j9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "velmalatest.garciano.com.velmalatest",
+            "certificate_hash": "EFF9697BC03C489447933036583C8D4C19752DDF"
+          }
+        },
+        {
+          "client_id": "425990936783-8r4rdg0qk4lkrinqvn7etpggm9qud8e8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAe3bRCguMbFf-heG7o39NjKypMoeK1qgk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
