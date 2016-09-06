@@ -36,10 +36,10 @@ public class OnboardingFragment1 extends Fragment implements View.OnClickListene
 
 //    private static final int RESULT_OK = 0;
     View rootView;
-    private TextView des;
-    private EditText descrip;
-    private TextView loc;
-    private EditText locate;
+    public static TextView des;
+    public static EditText descrip;
+    public static TextView loc;
+    public static EditText locate;
     int PLACE_PICKER_REQUEST = 1;
 
 

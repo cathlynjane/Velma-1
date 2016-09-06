@@ -32,4 +32,14 @@ dependencies {
 //    compile 'com.google.android.gms:play-services-plus:8.3.0'
     compile 'com.android.support:design:24.1.0'
     compile 'com.ogaclejapan.smarttablayout:library:1.2.1@aar'
+    compile 'com.github.alamkanak:android-week-view:1.2.6'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.google.android.gms:play-services-auth:9.0.0'
+    compile 'pub.devrel:easypermissions:0.1.5'
+    compile('com.google.api-client:google-api-client-android:1.22.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+    compile('com.google.apis:google-api-services-calendar:v3-rev202-1.22.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
 }

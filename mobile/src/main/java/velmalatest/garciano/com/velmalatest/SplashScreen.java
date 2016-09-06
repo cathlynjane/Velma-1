@@ -89,6 +89,7 @@ public class SplashScreen extends AppCompatActivity {
 
             if(isLoggedIn){
                // "Landing";
+                this.finish();
                 Intent i = new Intent(SplashScreen.this,LandingActivity.class);
                 startActivity(i);
             }
@@ -102,7 +103,7 @@ public class SplashScreen extends AppCompatActivity {
 
 
         } else {
-
+            this.finish();
             Intent i = new Intent(SplashScreen.this,TutorialActivity.class);
             startActivity(i);
             Toast.makeText(mcontext,"Tutorial",Toast.LENGTH_SHORT).show();
@@ -173,9 +174,7 @@ public class SplashScreen extends AppCompatActivity {
 //
 //    protected void onStop() {
 //        super.onStop();
-//        if (google_api_client.isConnected()) {
-//            google_api_client.disconnect();
-//        }
+//       onBackPressed();
 //    }
 //
 //    protected void onResume(){
@@ -257,5 +256,7 @@ public class SplashScreen extends AppCompatActivity {
 //        return signedIn;
 //    }
 //
+
+
 
 }

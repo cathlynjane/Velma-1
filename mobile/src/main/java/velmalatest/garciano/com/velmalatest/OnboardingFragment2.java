@@ -32,13 +32,13 @@ import java.util.Calendar;
  */
 public class OnboardingFragment2 extends Fragment implements View.OnClickListener{
     View rootView;
-    private int sYear, sMonth, sDay, sHour, sMinute;
-    private int eYear, eMonth, eDay, eHour, eMinute;
-    private EditText dateStart;
-    private EditText dateEnd;
-    private EditText timeStart;
-    private EditText timeEnd;
-    private EditText alarming;
+    public static int sYear, sMonth, sDay, sHour, sMinute;
+    public static int eYear, eMonth, eDay, eHour, eMinute;
+    public static EditText dateStart;
+    public static EditText dateEnd;
+    public static EditText timeStart;
+    public static EditText timeEnd;
+    public static EditText alarming;
     int PLACE_PICKER_REQUEST = 1;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

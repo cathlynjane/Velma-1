@@ -58,8 +58,8 @@ public class OnboardingFragment3 extends Fragment implements GoogleApiClient.OnC
 
 
     View rootView;
-    private TextView text;
-    private Button inviteFriends;
+    public static TextView text;
+    public static Button inviteFriends;
 
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
