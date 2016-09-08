@@ -1,5 +1,6 @@
 package velmalatest.garciano.com.velmalatest;
 
+import android.app.Notification;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +35,8 @@ public class TutorialActivity extends FragmentActivity {
         //prefs.edit().putBoolean("isFirstRun", true).commit();
         Boolean isFirstRun = prefs.getBoolean("isFirstRun", false);
         prefs.edit().putBoolean("isFirstRun", true).commit();
+
+        showNotification();
 
         pager = (ViewPager)findViewById(R.id.pager);
         indicator = (SmartTabLayout)findViewById(R.id.indicator);
@@ -106,5 +110,23 @@ public class TutorialActivity extends FragmentActivity {
         startActivity(main);
 
         finish();
+    }
+
+    private void showNotification() {
+        String eventDescription = "Manage your time in a smartest way";
+
+        android.support.v4.app.NotificationCompat.BigTextStyle bigStyle = new android.support.v4.app.NotificationCompat.BigTextStyle();
+        bigStyle.bigText(eventDescription);
+
+        Notification notification = new android.support.v4.app.NotificationCompat.Builder(getApplication())
+                .setSmallIcon(R.drawable.velmalogo)
+                .setContentTitle("Welcome to Velma")
+                .setContentText(eventDescription).setStyle(bigStyle)
+                .extend(new android.support.v4.app.NotificationCompat.WearableExtender().setHintShowBackgroundOnly(true))
+                .build();
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplication());
+        int notificationId = 1;
+        notificationManager.notify(notificationId, notification);
+
     }
 }

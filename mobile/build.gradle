@@ -42,4 +42,6 @@ dependencies {
     compile('com.google.apis:google-api-services-calendar:v3-rev202-1.22.0') {
         exclude group: 'org.apache.httpcomponents'
     }
+
+    compile "com.android.support:support-v4:24.1.0"
 }

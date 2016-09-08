@@ -1,6 +1,7 @@
 package velmalatest.garciano.com.velmalatest;
 
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.graphics.RectF;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +30,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.plus.People;
 import com.google.android.gms.plus.Plus;
 
 import java.text.SimpleDateFormat;
@@ -38,12 +41,11 @@ import java.util.Locale;
 
 
 
-public class LandingActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener, GoogleApiClient.ConnectionCallbacks,
+public class LandingActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener, GoogleApiClient.ConnectionCallbacks, ResultCallback<People.LoadPeopleResult>,
        WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener{
 
     GoogleApiClient google_api_client;
     GoogleApiAvailability google_api_availability;
-    SignInButton signIn_btn;
     private static final int SIGN_IN_CODE = 0;
     private static final int PROFILE_PIC_SIZE = 120;
     private ConnectionResult connection_result;
@@ -63,7 +65,7 @@ public class LandingActivity extends AppCompatActivity implements GoogleApiClien
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        buidNewGoogleApiClient();
+        buildNewGoogleApiClient();
         setContentView(R.layout.activity_activity_landing);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -71,25 +73,21 @@ public class LandingActivity extends AppCompatActivity implements GoogleApiClien
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         mWeekView = (WeekView) findViewById(R.id.weekView);
-
         // Show a toast message about the touched event.
         mWeekView.setOnEventClickListener(this);
-
         // The week view has infinite scrolling horizontally. We have to provide the events of a
         // month every time the month changes on the week view.
         mWeekView.setMonthChangeListener(this);
-
         // Set long press listener for events.
         mWeekView.setEventLongPressListener(this);
-
         // Set up a date time interpreter to interpret how the date and time will be formatted in
         // the week view. This is optional.
         setupDateTimeInterpreter(false);
 
 
+    }
 
-        fabButton = (FloatingActionButton) findViewById(R.id.fab);
-        fabButton.setOnClickListener(this);
+    private void buildNewGoogleApiClient(){
 
         google_api_client =  new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -100,6 +98,83 @@ public class LandingActivity extends AppCompatActivity implements GoogleApiClien
                 .build();
     }
 
+    protected void onStart() {
+        super.onStart();
+//        google_api_client.connect();
+
+    }
+
+    protected void onStop() {
+        super.onStop();
+        if (google_api_client.isConnected()) {
+            google_api_client.disconnect();
+        }
+    }
+
+    protected void onResume(){
+        super.onResume();
+        if (google_api_client.isConnected()) {
+            google_api_client.connect();
+
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int responseCode,
+                                    Intent intent) {
+        // Check which request we're responding to
+        if (requestCode == SIGN_IN_CODE) {
+            request_code = requestCode;
+            if (responseCode != RESULT_OK) {
+                is_signInBtn_clicked = false;
+
+            }
+
+            is_intent_inprogress = false;
+
+            if (!google_api_client.isConnecting()) {
+                google_api_client.connect();
+            }
+        }
+
+    }
+
+    @Override
+    public void onConnected(Bundle arg0) {
+        is_signInBtn_clicked = false;
+        // Get user's information and set it into the layout
+
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+//        prefs.edit().putBoolean("isLoggedIn", true).commit();
+//        Intent i = new Intent(LandingActivity.this, LandingActivity.class);
+//        startActivity(i);
+    }
+
+    @Override
+    public void onConnectionSuspended(int arg0) {
+        google_api_client.connect();
+
+    }
+
+    private void resolveSignInError() {
+        if (connection_result.hasResolution()) {
+            try {
+                is_intent_inprogress = true;
+                connection_result.startResolutionForResult(this, SIGN_IN_CODE);
+                Log.d("resolve error", "sign in error resolved");
+            } catch (IntentSender.SendIntentException e) {
+                is_intent_inprogress = false;
+                google_api_client.connect();
+
+            }
+        }
+    }
+
+
+
+
+
     @Override
     public void onClick(View view) {
         if (view == fabButton) {
@@ -108,18 +183,9 @@ public class LandingActivity extends AppCompatActivity implements GoogleApiClien
             }
         }
 
-    @Override
-    public void onConnected(Bundle arg0) {
-        is_signInBtn_clicked = false;
-        // Get user's information and set it into the layout
 
 
-    }
 
-    @Override
-    public void onConnectionSuspended(int arg0) {
-        google_api_client.connect();
-    }
 //    private void buidNewGoogleApiClient() {
 //
 //        google_api_client = new GoogleApiClient.Builder(this)
@@ -227,14 +293,25 @@ public class LandingActivity extends AppCompatActivity implements GoogleApiClien
         switch (id) {
             case R.id.action_logout:
             {
+
                 gPlusSignOut();
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                prefs.edit().putBoolean("isLoggedOut", false).apply();
+                prefs.edit().putBoolean("isLoggedIn", false).apply();
+                Intent i = new Intent(LandingActivity.this, LoginActivity.class);
+                startActivity(i);
+
+
+            return true;
             }
-            case R.id.action_monthly_view:
+            case R.id.action_monthly_view: {
                 return true;
-            case R.id.action_today:
+            }
+            case R.id.action_today: {
                 mWeekView.goToToday();
                 return true;
-            case R.id.action_day_view:
+            }
+            case R.id.action_day_view: {
                 if (mWeekViewType != TYPE_DAY_VIEW) {
                     item.setChecked(!item.isChecked());
                     mWeekViewType = TYPE_DAY_VIEW;
@@ -245,7 +322,9 @@ public class LandingActivity extends AppCompatActivity implements GoogleApiClien
                     mWeekView.setTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
                     mWeekView.setEventTextSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 12, getResources().getDisplayMetrics()));
                 }
+
                 return true;
+            }
             case R.id.action_three_day_view:
                 if (mWeekViewType != TYPE_THREE_DAY_VIEW) {
                     item.setChecked(!item.isChecked());
@@ -441,27 +520,24 @@ public class LandingActivity extends AppCompatActivity implements GoogleApiClien
 
     private void gPlusSignOut() {
         if (google_api_client.isConnected()) {
-//            Plus.AccountApi.clearDefaultAccount(google_api_client);
-//            google_api_client.disconnect();
-//            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-//            prefs.edit().putBoolean("isLoggedIn", false).commit();
-//            Intent logoutIntent = new Intent(LandingActivity.this, LoginActivity.class);
-//            startActivity(logoutIntent);
+            Plus.AccountApi.clearDefaultAccount(google_api_client);
+            google_api_client.disconnect();
 
 
 
-                Auth.GoogleSignInApi.signOut(google_api_client).setResultCallback(
-                        new ResultCallback<Status>() {
-                            @Override
-                            public void onResult(Status status) {
-//                                Plus.AccountApi.clearDefaultAccount(google_api_client);
-//                                google_api_client.disconnect();
-                                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-                                prefs.edit().putBoolean("isLoggedIn", false).commit();
-                                Intent intent = new Intent(LandingActivity.this, LoginActivity.class);
-                                startActivity(intent);
-                            }
-                        });
+
+//                Auth.GoogleSignInApi.signOut(google_api_client).setResultCallback(
+//                        new ResultCallback<Status>() {
+//                            @Override
+//                            public void onResult(Status status) {
+////                                Plus.AccountApi.clearDefaultAccount(google_api_client);
+////                                google_api_client.disconnect();
+//                                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+//                                prefs.edit().putBoolean("isLoggedIn", false).commit();
+//                                Intent intent = new Intent(LandingActivity.this, LoginActivity.class);
+//                                startActivity(intent);
+//                            }
+//                        });
 
         }
     }
@@ -497,4 +573,8 @@ public class LandingActivity extends AppCompatActivity implements GoogleApiClien
     }
 
 
+    @Override
+    public void onResult(@NonNull People.LoadPeopleResult loadPeopleResult) {
+
+    }
 }

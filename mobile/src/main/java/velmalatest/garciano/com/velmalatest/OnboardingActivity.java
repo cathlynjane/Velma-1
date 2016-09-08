@@ -150,9 +150,9 @@ public class OnboardingActivity extends AppCompatActivity {
                 Calendar beginTime = Calendar.getInstance();
                 beginTime.set(2016, 9, 14, 7, 30);
                 startMillis = beginTime.getTimeInMillis();
-                Calendar endTime = Calendar.getInstance();
-                endTime.set(2016, 9, 14, 8, 45);
-                endMillis = endTime.getTimeInMillis();
+                Calendar endtime = Calendar.getInstance();
+                endtime.set(2016, 9, 14, 8, 45);
+                endMillis = endtime.getTimeInMillis();
 
 // Insert Event
                 ContentResolver cr = getContentResolver();
@@ -181,170 +181,170 @@ public class OnboardingActivity extends AppCompatActivity {
                 String eventID = uri.getLastPathSegment();
 
 
-//                final String name = event.getText().toString();
-//                final String eventDescription = OnboardingFragment1.descrip.getText().toString();
-//                final String eventLocation = OnboardingFragment1.locate.getText().toString();
-//                final String startDate = OnboardingFragment2.dateStart.getText().toString();
-//                final String endDate = OnboardingFragment2.dateEnd.getText().toString();
-//                final String startTime = OnboardingFragment2.timeStart.getText().toString();
-////                final String endTime = OnboardingFragment2.timeEnd.getText().toString();
-//                final String notify = OnboardingFragment2.alarming.getText().toString();
-//
-//                if (name.isEmpty())
-//                {
-//                    event.setError("This field is required");
-//                }
-//                else if(eventDescription.isEmpty())
-//                {
-//                    AlertDialog.Builder builder1 = new AlertDialog.Builder(OnboardingActivity.this);
-//                    builder1.setMessage("You must enter event description.");
-//                    builder1.setCancelable(true);
-//
-//                    builder1.setPositiveButton(
-//                            "Okay",
-//                            new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int id) {
-//                                    dialog.cancel();
-//                                }
-//                            });
-//
-//                    AlertDialog alert11 = builder1.create();
-//                    alert11.show();
-//
-//                }
-//
-//                else if(eventLocation.isEmpty())
-//                {
-//                    AlertDialog.Builder builder1 = new AlertDialog.Builder(OnboardingActivity.this);
-//                    builder1.setMessage("You must pick the event location.");
-//                    builder1.setCancelable(true);
-//
-//                    builder1.setPositiveButton(
-//                            "Okay",
-//                            new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int id) {
-//                                    dialog.cancel();
-//                                }
-//                            });
-//
-//                    AlertDialog alert11 = builder1.create();
-//                    alert11.show();
-//                }
-//
-//                else if(eventDescription.isEmpty() && eventLocation.isEmpty())
-//                {
-//                    AlertDialog.Builder builder1 = new AlertDialog.Builder(OnboardingActivity.this);
-//                    builder1.setMessage("You must enter the event description and location.");
-//                    builder1.setCancelable(true);
-//
-//                    builder1.setPositiveButton(
-//                            "Okay",
-//                            new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int id) {
-//                                    dialog.cancel();
-//                                }
-//                            });
-//
-//                    AlertDialog alert11 = builder1.create();
-//                    alert11.show();
-//                }
-//
-//                else if (startDate.isEmpty())
-//                {
-//                    AlertDialog.Builder builder1 = new AlertDialog.Builder(OnboardingActivity.this);
-//                    builder1.setMessage("You must enter start date.");
-//                    builder1.setCancelable(true);
-//
-//                    builder1.setPositiveButton(
-//                            "Okay",
-//                            new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int id) {
-//                                    dialog.cancel();
-//                                }
-//                            });
-//
-//                    AlertDialog alert11 = builder1.create();
-//                    alert11.show();
-//                }
-//
-//                else if (endDate.isEmpty())
-//                {
-//                    AlertDialog.Builder builder1 = new AlertDialog.Builder(OnboardingActivity.this);
-//                    builder1.setMessage("You must enter end date.");
-//                    builder1.setCancelable(true);
-//
-//                    builder1.setPositiveButton(
-//                            "Okay",
-//                            new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int id) {
-//                                    dialog.cancel();
-//                                }
-//                            });
-//
-//                    AlertDialog alert11 = builder1.create();
-//                    alert11.show();
-//                }
-//
-//                else if (startTime.isEmpty())
-//                {
-//                    AlertDialog.Builder builder1 = new AlertDialog.Builder(OnboardingActivity.this);
-//                    builder1.setMessage("You must enter start time.");
-//                    builder1.setCancelable(true);
-//
-//                    builder1.setPositiveButton(
-//                            "Okay",
-//                            new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int id) {
-//                                    dialog.cancel();
-//                                }
-//                            });
-//
-//                    AlertDialog alert11 = builder1.create();
-//                    alert11.show();
-//                }
-//
-//                else if (endTime.isEmpty())
-//                {
-//                    AlertDialog.Builder builder1 = new AlertDialog.Builder(OnboardingActivity.this);
-//                    builder1.setMessage("You must enter end time.");
-//                    builder1.setCancelable(true);
-//
-//                    builder1.setPositiveButton(
-//                            "Okay",
-//                            new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int id) {
-//                                    dialog.cancel();
-//                                }
-//                            });
-//
-//                    AlertDialog alert11 = builder1.create();
-//                    alert11.show();
-//                }
-//
-//                else if (notify.isEmpty())
-//                {
-//                    AlertDialog.Builder builder1 = new AlertDialog.Builder(OnboardingActivity.this);
-//                    builder1.setMessage("You must choose alarm notification.");
-//                    builder1.setCancelable(true);
-//
-//                    builder1.setPositiveButton(
-//                            "Okay",
-//                            new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int id) {
-//                                    dialog.cancel();
-//                                }
-//                            });
-//
-//                    AlertDialog alert11 = builder1.create();
-//                    alert11.show();
-//                }
-//
-//
-//
-//                else {
+                final String name = event.getText().toString();
+                final String eventDescription = OnboardingFragment1.descrip.getText().toString();
+                final String eventLocation = OnboardingFragment1.locate.getText().toString();
+                final String startDate = OnboardingFragment2.dateStart.getText().toString();
+                final String endDate = OnboardingFragment2.dateEnd.getText().toString();
+                final String startTime = OnboardingFragment2.timeStart.getText().toString();
+                final String endTime = OnboardingFragment2.timeEnd.getText().toString();
+                final String notify = OnboardingFragment2.alarming.getText().toString();
+
+                if (name.isEmpty())
+                {
+                    event.setError("This field is required");
+                }
+                else if(eventDescription.isEmpty())
+                {
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(OnboardingActivity.this);
+                    builder1.setMessage("You must enter event description.");
+                    builder1.setCancelable(true);
+
+                    builder1.setPositiveButton(
+                            "Okay",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
+
+                }
+
+                else if(eventLocation.isEmpty())
+                {
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(OnboardingActivity.this);
+                    builder1.setMessage("You must pick the event location.");
+                    builder1.setCancelable(true);
+
+                    builder1.setPositiveButton(
+                            "Okay",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
+                }
+
+                else if(eventDescription.isEmpty() && eventLocation.isEmpty())
+                {
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(OnboardingActivity.this);
+                    builder1.setMessage("You must enter the event description and location.");
+                    builder1.setCancelable(true);
+
+                    builder1.setPositiveButton(
+                            "Okay",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
+                }
+
+                else if (startDate.isEmpty())
+                {
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(OnboardingActivity.this);
+                    builder1.setMessage("You must enter start date.");
+                    builder1.setCancelable(true);
+
+                    builder1.setPositiveButton(
+                            "Okay",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
+                }
+
+                else if (endDate.isEmpty())
+                {
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(OnboardingActivity.this);
+                    builder1.setMessage("You must enter end date.");
+                    builder1.setCancelable(true);
+
+                    builder1.setPositiveButton(
+                            "Okay",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
+                }
+
+                else if (startTime.isEmpty())
+                {
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(OnboardingActivity.this);
+                    builder1.setMessage("You must enter start time.");
+                    builder1.setCancelable(true);
+
+                    builder1.setPositiveButton(
+                            "Okay",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
+                }
+
+                else if (endTime.isEmpty())
+                {
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(OnboardingActivity.this);
+                    builder1.setMessage("You must enter end time.");
+                    builder1.setCancelable(true);
+
+                    builder1.setPositiveButton(
+                            "Okay",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
+                }
+
+                else if (notify.isEmpty())
+                {
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(OnboardingActivity.this);
+                    builder1.setMessage("You must choose alarm notification.");
+                    builder1.setCancelable(true);
+
+                    builder1.setPositiveButton(
+                            "Okay",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
+                }
+
+
+
+                else {
                     Intent main = new Intent(OnboardingActivity.this, LandingActivity.class);
                     startActivity(main);
-//                }
+                }
             }
         });
     }

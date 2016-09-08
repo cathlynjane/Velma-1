@@ -1,6 +1,9 @@
 package velmalatest.garciano.com.velmalatest;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.content.SharedPreferences;
@@ -8,7 +11,9 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,7 +50,7 @@ public class LoginActivity extends AppCompatActivity implements OnConnectionFail
     private int request_code;
     ProgressDialog progress_dialog;
 
-
+    Context mcontext;
 
 
     @Override
@@ -61,18 +66,30 @@ public class LoginActivity extends AppCompatActivity implements OnConnectionFail
         progress_dialog = new ProgressDialog(this);
         progress_dialog.setMessage("Signing in....");
 
-
-
-
-
+//        mcontext = this;
+//
+//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mcontext);
+//        Boolean isLoggedIn = prefs.getBoolean("isLoggedIn", true);
+//        Boolean isLoggedOut = prefs.getBoolean("isLoggedOut", true);
+//
+//        if(isLoggedIn){
+//            // "Landing";
+//            this.finish();
+//            Intent i = new Intent(LoginActivity.this,LandingActivity.class);
+//            startActivity(i);
+//        }
+//        else if(isLoggedOut){
+//
+//            Intent i = new Intent(LoginActivity.this,LoginActivity.class);
+//            startActivity(i);
+//            // "Login";
+//        }
     }
 
     /*
     create and  initialize GoogleApiClient object to use Google Plus Api.
     While initializing the GoogleApiClient object, request the Plus.SCOPE_PLUS_LOGIN scope.
     */
-
-
 
     //region Functions
 
@@ -101,9 +118,6 @@ public class LoginActivity extends AppCompatActivity implements OnConnectionFail
 
     //endregion
 
-
-
-
     /*
       Customize sign-in button. The sign-in button can be displayed in
       multiple sizes and color schemes. It can also be contextually
@@ -112,8 +126,6 @@ public class LoginActivity extends AppCompatActivity implements OnConnectionFail
       may be displayed when only basic profile is requested. Try adding the
       Plus.SCOPE_PLUS_LOGIN scope to see the  difference.
     */
-
-
 
     /*
       Set on click Listeners on the sign-in sign-out and disconnect buttons
@@ -124,7 +136,6 @@ public class LoginActivity extends AppCompatActivity implements OnConnectionFail
         findViewById(R.id.sign_out_button).setOnClickListener(this);
 //        findViewById(R.id.frnd_button).setOnClickListener(this);
 //        findViewById(R.id.disconnect_button).setOnClickListener(this);
-
 
     }
 
@@ -148,29 +159,6 @@ public class LoginActivity extends AppCompatActivity implements OnConnectionFail
             changeUI(true);
         }
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_logout) {
-//            gPlusSignOut();
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @Override
     public void onConnectionFailed(ConnectionResult result) {
@@ -265,12 +253,8 @@ public class LoginActivity extends AppCompatActivity implements OnConnectionFail
 //                        .setResultCallback(this);
 //
 //                break;
-
-
         }
     }
-
-
 
     /*
       Sign-in into the Google + account
@@ -282,6 +266,7 @@ public class LoginActivity extends AppCompatActivity implements OnConnectionFail
             is_signInBtn_clicked = true;
             progress_dialog.show();
            resolveSignInError();
+            showNotification();
 
         }
     }
@@ -306,8 +291,6 @@ public class LoginActivity extends AppCompatActivity implements OnConnectionFail
 //                    });
 //        }
 //    }
-
-
     /*
       Method to resolve any signin errors
      */
@@ -338,9 +321,6 @@ public class LoginActivity extends AppCompatActivity implements OnConnectionFail
 //            changeUI(false);
     }
 }
-
-
-
     /*
      get user's information name, email, profile pic,Date of birth,tag line and about me
      */
@@ -469,5 +449,25 @@ public class LoginActivity extends AppCompatActivity implements OnConnectionFail
 //            bitmap_img.setImageBitmap(result_img);
 //        }
 //    }
+private void showNotification() {
+    String eventDescription = "Manage your time in a smartest way";
+
+    android.support.v4.app.NotificationCompat.BigTextStyle bigStyle = new android.support.v4.app.NotificationCompat.BigTextStyle();
+    bigStyle.bigText(eventDescription);
+
+    Notification notification = new android.support.v4.app.NotificationCompat.Builder(getApplication())
+            .setSmallIcon(R.drawable.velmalogo)
+            .setContentTitle("Welcome to Velma")
+            .setContentText(eventDescription).setStyle(bigStyle)
+            .extend(new android.support.v4.app.NotificationCompat.WearableExtender().setHintShowBackgroundOnly(true))
+            .build();
+    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplication());
+    int notificationId = 1;
+    notificationManager.notify(notificationId, notification);
+
+    Intent intent = new Intent(LoginActivity.this, LandingActivity.class);
+    startActivity(intent);
+    resolveSignInError();
+}
 
 }
