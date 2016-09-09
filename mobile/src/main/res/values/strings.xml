@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">VelmaLatest</string>
+    <string name="app_name">Velma</string>
     <string name="sign_out">Sign Out</string>
     <string name="disconnect">Disconnect</string>
     <string name="btn_logout_from_google">Logout from Google</string>

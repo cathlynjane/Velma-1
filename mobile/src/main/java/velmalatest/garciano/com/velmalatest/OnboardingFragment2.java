@@ -1,14 +1,11 @@
 package velmalatest.garciano.com.velmalatest;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,12 +15,9 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.util.Calendar;
 
@@ -34,10 +28,10 @@ public class OnboardingFragment2 extends Fragment implements View.OnClickListene
     View rootView;
     public static int sYear, sMonth, sDay, sHour, sMinute;
     public static int eYear, eMonth, eDay, eHour, eMinute;
-    public static EditText dateStart;
-    public static EditText dateEnd;
-    public static EditText timeStart;
-    public static EditText timeEnd;
+    public static TextView dateStart;
+    public static TextView dateEnd;
+    public static TextView timeStart;
+    public static TextView timeEnd;
     public static EditText alarming;
     int PLACE_PICKER_REQUEST = 1;
 
@@ -49,14 +43,14 @@ public class OnboardingFragment2 extends Fragment implements View.OnClickListene
         // Get current date by calender
 
 
-        dateStart = (EditText)rootView.findViewById(R.id.startdate);
+        dateStart = (TextView)rootView.findViewById(R.id.startdate);
         dateStart.setHintTextColor(getResources().getColor(R.color.colorPrimary));
 //        dateStart.setInputType(InputType.TYPE_NULL);
-        dateEnd = (EditText)rootView.findViewById(R.id.enddate);
+        dateEnd = (TextView)rootView.findViewById(R.id.enddate);
         dateEnd.setHintTextColor(getResources().getColor(R.color.colorPrimary));
-        timeStart = (EditText)rootView.findViewById(R.id.starttime);
+        timeStart = (TextView)rootView.findViewById(R.id.starttime);
         timeStart.setHintTextColor(getResources().getColor(R.color.colorPrimary));
-        timeEnd = (EditText)rootView.findViewById(R.id.endtime);
+        timeEnd = (TextView)rootView.findViewById(R.id.endtime);
         timeEnd.setHintTextColor(getResources().getColor(R.color.colorPrimary));
         alarming = (EditText) rootView.findViewById(R.id.alarm);
         alarming.setHintTextColor(getResources().getColor(R.color.colorPrimary));

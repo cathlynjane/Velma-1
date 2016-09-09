@@ -18,8 +18,7 @@
         android:icon="@drawable/velma"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        >
+        android:theme="@style/AppTheme">
 
 
         <meta-data
@@ -29,11 +28,12 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC-JP-mJI71Ex3D7uMENbIsgL4ejt1XV5M" />
+
         <activity
             android:name="velmalatest.garciano.com.velmalatest.SplashScreen"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,28 +42,32 @@
 
 
         </activity>
-        <activity android:name=".LoginActivity"
-           android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-
-        <activity android:name=".FriendActivity">
-        </activity>
-        <activity android:name=".AddEventActivity">
-        </activity>
-
-        <activity android:name=".LandingActivity"
+        <activity
+            android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
 
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".FriendActivity"></activity>
+        <activity android:name=".AddEventActivity"></activity>
 
-        <activity android:name=".OnboardingActivity"
+        <activity
+            android:name=".LandingActivity"
+            android:label="Velma"
             android:theme="@style/AppTheme.NoActionBar">
 
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
+        </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:label="Velma"></activity>
+
+        <activity
+            android:name=".OnboardingActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
                 android:value=".LandingActivity"></meta-data>
         </activity>
 

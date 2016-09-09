@@ -7,7 +7,6 @@ import android.graphics.RectF;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,27 +21,25 @@ import com.alamkanak.weekview.DateTimeInterpreter;
 import com.alamkanak.weekview.MonthLoader;
 import com.alamkanak.weekview.WeekView;
 import com.alamkanak.weekview.WeekViewEvent;
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-
 import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.plus.People;
 import com.google.android.gms.plus.Plus;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import velmalatest.garciano.com.velmalatest.apiclient.MyEvent;
 
 
 public class LandingActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener, GoogleApiClient.ConnectionCallbacks, ResultCallback<People.LoadPeopleResult>,
-       WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener{
+        WeekView.EventClickListener, MonthLoader.MonthChangeListener, WeekView.EventLongPressListener, WeekView.EmptyViewLongPressListener {
 
     GoogleApiClient google_api_client;
     GoogleApiAvailability google_api_availability;
@@ -59,8 +56,14 @@ public class LandingActivity extends AppCompatActivity implements GoogleApiClien
     private static final int TYPE_DAY_VIEW = 1;
     private static final int TYPE_THREE_DAY_VIEW = 2;
     private static final int TYPE_WEEK_VIEW = 3;
+    private static final int CREATE_EVENT = 0;
     private int mWeekViewType = TYPE_THREE_DAY_VIEW;
     private WeekView mWeekView;
+
+    List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
+
+
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +73,7 @@ public class LandingActivity extends AppCompatActivity implements GoogleApiClien
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        // getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         mWeekView = (WeekView) findViewById(R.id.weekView);
         // Show a toast message about the touched event.
@@ -82,14 +85,19 @@ public class LandingActivity extends AppCompatActivity implements GoogleApiClien
         mWeekView.setEventLongPressListener(this);
         // Set up a date time interpreter to interpret how the date and time will be formatted in
         // the week view. This is optional.
+
+        fab = (FloatingActionButton) findViewById(R.id.fabButton);
+
+        fab.setOnClickListener(this);
+
         setupDateTimeInterpreter(false);
 
 
     }
 
-    private void buildNewGoogleApiClient(){
+    private void buildNewGoogleApiClient() {
 
-        google_api_client =  new GoogleApiClient.Builder(this)
+        google_api_client = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(Plus.API, Plus.PlusOptions.builder().build())
@@ -111,7 +119,7 @@ public class LandingActivity extends AppCompatActivity implements GoogleApiClien
         }
     }
 
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         if (google_api_client.isConnected()) {
             google_api_client.connect();
@@ -119,26 +127,6 @@ public class LandingActivity extends AppCompatActivity implements GoogleApiClien
         }
     }
 
-
-    @Override
-    protected void onActivityResult(int requestCode, int responseCode,
-                                    Intent intent) {
-        // Check which request we're responding to
-        if (requestCode == SIGN_IN_CODE) {
-            request_code = requestCode;
-            if (responseCode != RESULT_OK) {
-                is_signInBtn_clicked = false;
-
-            }
-
-            is_intent_inprogress = false;
-
-            if (!google_api_client.isConnecting()) {
-                google_api_client.connect();
-            }
-        }
-
-    }
 
     @Override
     public void onConnected(Bundle arg0) {
@@ -172,21 +160,113 @@ public class LandingActivity extends AppCompatActivity implements GoogleApiClien
     }
 
 
-
-
-
     @Override
     public void onClick(View view) {
-        if (view == fabButton) {
+
+        // Toast.makeText(getBaseContext(), "" + view, Toast.LENGTH_LONG).show();
+
+        if (view == fab) {
             Intent intent = new Intent(LandingActivity.this, OnboardingActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, CREATE_EVENT);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int responseCode,
+                                    Intent intent) {
+        // Check which request we're responding to
+        if (requestCode == SIGN_IN_CODE) {
+            request_code = requestCode;
+            if (responseCode != RESULT_OK) {
+                is_signInBtn_clicked = false;
+
+            }
+
+            is_intent_inprogress = false;
+
+            if (!google_api_client.isConnecting()) {
+                google_api_client.connect();
             }
         }
 
+        if (requestCode == CREATE_EVENT) {
+
+            Toast.makeText(getBaseContext(), "Here0", Toast.LENGTH_SHORT).show();
+            MyEvent myevent = null;
+
+            if (responseCode == RESULT_OK) {
+
+                Toast.makeText(getBaseContext(), "Here1", Toast.LENGTH_SHORT).show();
+
+                Bundle res = intent.getExtras();
+                String name = res.getString("name");
+                String eventDescription = res.getString("eventDescription");
+                String eventLocation = res.getString("eventLocation");
+                String startDate = res.getString("startDate");
+                String startTime = res.getString("startTime");
+                String endDate = res.getString("endDate");
+                String endTime = res.getString("param_result");
+                String notify = res.getString("endTime");
+
+                myevent = new MyEvent(name, eventDescription, eventLocation, startDate, endDate, startTime, endTime, notify);
+
+                Date sdate = null;
+                Date edate = null;
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                try {
+                    sdate = format.parse(startDate);
+                    edate = format.parse(endDate);
+                } catch (Exception e) {
+
+                }
+
+                //String intMonth = (String) android.text.format.DateFormat.format("MM", date); //06
+                //String year = (String) android.text.format.DateFormat.format("yyyy", date); //2013
 
 
+                Calendar stime = Calendar.getInstance();
+                stime.set(Calendar.HOUR_OF_DAY, 3);
+                stime.set(Calendar.MINUTE, 0);
+                stime.set(Calendar.MONTH, 9 - 1);
+                stime.set(Calendar.YEAR, 2016);
+                Calendar etime = Calendar.getInstance();
+                etime.add(Calendar.HOUR, 1);
+                etime.set(Calendar.MONTH, 9 - 1);
+                WeekViewEvent event = new WeekViewEvent(1, name, stime, etime);
+                //event.setColor(getResources().getColor(R.color.event_color_01));
+                events.add(event);
 
-//    private void buidNewGoogleApiClient() {
+
+//                Calendar sttime = Calendar.getInstance();
+//                sttime.set(Calendar.HOUR_OF_DAY, 3);
+//                sttime.set(Calendar.MINUTE, 30);
+//                sttime.set(Calendar.MONTH, 9 - 1);
+//                sttime.set(Calendar.YEAR, 2016);
+//                Calendar ettime = (Calendar) sttime.clone();
+//                ettime.set(Calendar.HOUR_OF_DAY, 4);
+//                ettime.set(Calendar.MINUTE, 30);
+//                ettime.set(Calendar.MONTH, 9 - 1);
+//                event = new WeekViewEvent(10, getEventTitle(sttime), sttime, ettime);
+//                event.setColor(Color.parseColor("#000000"));
+//                events.add(event);
+
+
+                // Create a new event.
+                //  WeekViewEvent event = new WeekViewEvent(20, name, sdate, edate);
+                //  events.add(event);
+
+
+                // Refresh the week view. onMonthChange will be called again.
+                mWeekView.notifyDatasetChanged();
+
+            }
+
+        }
+
+    }
+
+
+    //    private void buidNewGoogleApiClient() {
 //
 //        google_api_client = new GoogleApiClient.Builder(this)
 //                .addConnectionCallbacks(this)
@@ -291,8 +371,7 @@ public class LandingActivity extends AppCompatActivity implements GoogleApiClien
 //        }
 
         switch (id) {
-            case R.id.action_logout:
-            {
+            case R.id.action_logout: {
 
                 gPlusSignOut();
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -302,7 +381,7 @@ public class LandingActivity extends AppCompatActivity implements GoogleApiClien
                 startActivity(i);
 
 
-            return true;
+                return true;
             }
             case R.id.action_monthly_view: {
                 return true;
@@ -386,23 +465,24 @@ public class LandingActivity extends AppCompatActivity implements GoogleApiClien
     }
 
 
-
     @Override
     public List<WeekViewEvent> onMonthChange(int newYear, int newMonth) {
 
         // Populate the week view with some events.
-        List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
+
+
+        // Toast.makeText(getBaseContext(), "Hi", Toast.LENGTH_LONG).show();
 
 //        Calendar startTime = Calendar.getInstance();
 //        startTime.set(Calendar.HOUR_OF_DAY, 3);
 //        startTime.set(Calendar.MINUTE, 0);
-//        startTime.set(Calendar.MONTH, newMonth-1);
+//        startTime.set(Calendar.MONTH, newMonth - 1);
 //        startTime.set(Calendar.YEAR, newYear);
 //        Calendar endTime = (Calendar) startTime.clone();
 //        endTime.add(Calendar.HOUR, 1);
-//        endTime.set(Calendar.MONTH, newMonth-1);
+//        endTime.set(Calendar.MONTH, newMonth - 1);
 //        WeekViewEvent event = new WeekViewEvent(1, getEventTitle(startTime), startTime, endTime);
-//        event.setColor(getResources().getColor(R.color.event_color_01));
+//        //event.setColor(getResources().getColor(R.color.event_color_01));
 //        events.add(event);
 //
 //        startTime = Calendar.getInstance();
@@ -524,8 +604,6 @@ public class LandingActivity extends AppCompatActivity implements GoogleApiClien
             google_api_client.disconnect();
 
 
-
-
 //                Auth.GoogleSignInApi.signOut(google_api_client).setResultCallback(
 //                        new ResultCallback<Status>() {
 //                            @Override
@@ -556,7 +634,7 @@ public class LandingActivity extends AppCompatActivity implements GoogleApiClien
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
         if (!connectionResult.hasResolution()) {
-            google_api_availability.getErrorDialog(this, connectionResult.getErrorCode(),request_code).show();
+            google_api_availability.getErrorDialog(this, connectionResult.getErrorCode(), request_code).show();
             return;
         }
 

@@ -3,19 +3,14 @@ package velmalatest.garciano.com.velmalatest;
 /**
  * Created by admin on 7/20/2016.
  */
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -24,11 +19,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.plus.People;
-import com.google.android.gms.plus.Plus;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -83,7 +74,7 @@ public class SplashScreen extends AppCompatActivity {
 //maybe you want to check it by getting the sharedpreferences. Use this instead if (locked)
 // if (prefs.getBoolean("locked", locked) {\
             prefs.edit().putBoolean("isFirstRun", true).commit();
-            Toast.makeText(mcontext,"Login",Toast.LENGTH_SHORT).show();
+            //Toast.makeText(mcontext,"Login",Toast.LENGTH_SHORT).show();
 
 //             Intent i = new Intent(SplashScreen.this,LoginActivity.class);
 //             startActivity(i);
@@ -109,7 +100,7 @@ public class SplashScreen extends AppCompatActivity {
             Intent i = new Intent(SplashScreen.this,TutorialActivity.class);
             startActivity(i);
 
-            Toast.makeText(mcontext,"Tutorial",Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(mcontext,"Tutorial",Toast.LENGTH_SHORT).show();
 
 
             //startActivity(new Intent(mcontext, Tag1.class));
