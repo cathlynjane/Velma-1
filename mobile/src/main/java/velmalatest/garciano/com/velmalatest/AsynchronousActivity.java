@@ -1,3 +1,4 @@
+/*
 package velmalatest.garciano.com.velmalatest;
 
 import com.alamkanak.weekview.WeekView;
@@ -14,9 +15,11 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+*/
 /**
  * Created by Cathlyn Jane Amodia on 8/30/2016.
- */
+ *//*
+
 public class AsynchronousActivity extends LandingActivity implements Callback<List<Event>> {
 
     private List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
@@ -46,13 +49,15 @@ public class AsynchronousActivity extends LandingActivity implements Callback<Li
         return matchedEvents;
     }
 
-    /**
+    */
+/**
      * Checks if an event falls into a specific year and month.
      * @param event The event to check for.
      * @param year The year.
      * @param month The month.
      * @return True if the event matches the year and month.
-     */
+     *//*
+
     private boolean eventMatches(WeekViewEvent event, int year, int month) {
         return (event.getStartTime().get(Calendar.YEAR) == year && event.getStartTime().get(Calendar.MONTH) == month - 1) || (event.getEndTime().get(Calendar.YEAR) == year && event.getEndTime().get(Calendar.MONTH) == month - 1);
     }
@@ -74,3 +79,4 @@ public class AsynchronousActivity extends LandingActivity implements Callback<Li
 
 
 }
+*/
