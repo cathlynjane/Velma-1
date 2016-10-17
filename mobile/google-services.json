@@ -1,19 +1,21 @@
 {
   "project_info": {
-    "project_number": "425990936783",
-    "project_id": "velmalatest"
+    "project_number": "1035908077779",
+    "firebase_url": "https://velma-143505.firebaseio.com",
+    "project_id": "velma-143505",
+    "storage_bucket": "velma-143505.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:425990936783:android:b03013251e19cbf9",
+        "mobilesdk_app_id": "1:1035908077779:android:b03013251e19cbf9",
         "android_client_info": {
           "package_name": "velmalatest.garciano.com.velmalatest"
         }
       },
       "oauth_client": [
         {
-          "client_id": "425990936783-jcnl877ns4kjehm725vav9ueeu0ng7j9.apps.googleusercontent.com",
+          "client_id": "1035908077779-jo84euutautp1ts08pq17ck7oa8suced.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "velmalatest.garciano.com.velmalatest",
@@ -21,13 +23,17 @@
           }
         },
         {
-          "client_id": "425990936783-8r4rdg0qk4lkrinqvn7etpggm9qud8e8.apps.googleusercontent.com",
+          "client_id": "1035908077779-a68rflp2lu4caaijo3r6smpmbfvle1ic.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "1035908077779-bu359a49s28ged1irmatlpf96tadks0j.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAe3bRCguMbFf-heG7o39NjKypMoeK1qgk"
+          "current_key": "AIzaSyAmRzp9WsFnbSl7RfUrbIXYFC9o1pOeF34"
         }
       ],
       "services": {
@@ -35,11 +41,16 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1035908077779-a68rflp2lu4caaijo3r6smpmbfvle1ic.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }
