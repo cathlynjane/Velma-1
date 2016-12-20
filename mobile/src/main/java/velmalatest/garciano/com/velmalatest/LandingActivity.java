@@ -96,12 +96,12 @@ public class LandingActivity extends AppCompatActivity implements CalendarPicker
         fab = (FloatingActionButton) findViewById(R.id.fabButton);
 
         fab.setOnClickListener(this);
-
+//
 //        Calendar calNow = Calendar.getInstance();
 //        Calendar calSet = (Calendar) calNow.clone();
 //
 //        calSet.set(Calendar.HOUR_OF_DAY, 10);
-//        calSet.set(Calendar.MINUTE, 55);
+//        calSet.set(Calendar.MINUTE, 37);
 //        calSet.set(Calendar.SECOND, 0);
 //        calSet.set(Calendar.MILLISECOND, 0);
 //
