@@ -25,6 +25,7 @@
         android:layout_below="@+id/description"
         android:gravity="center_horizontal"
         android:editable="true"
+        android:imeOptions="actionNext"
         android:shadowColor="@color/colorPrimary"
         android:textColor="@color/colorPrimary"
         android:layout_marginTop="10dp"

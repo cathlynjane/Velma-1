@@ -1,5 +1,8 @@
 package velmalatest.garciano.com.velmalatest;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
@@ -29,7 +32,6 @@ import com.google.android.gms.plus.People;
 import com.google.android.gms.plus.Plus;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +39,7 @@ import java.util.Locale;
 
 import velmalatest.garciano.com.velmalatest.apiclient.DrawableCalendarEvent;
 import velmalatest.garciano.com.velmalatest.apiclient.MyEvent;
+import velmalatest.garciano.com.velmalatest.helper.AlarmReceiver;
 
 //import com.alamkanak.weekview.DateTimeInterpreter;
 //import com.alamkanak.weekview.MonthLoader;
@@ -65,17 +68,13 @@ public class LandingActivity extends AppCompatActivity implements CalendarPicker
     private static final int TYPE_WEEK_VIEW = 3;
     private static final int CREATE_EVENT = 0;
     private int mWeekViewType = TYPE_THREE_DAY_VIEW;
-
-
-//    private WeekView mWeekView;
-//
-//    List<WeekViewEvent> events = new ArrayList<WeekViewEvent>();
-
-
     FloatingActionButton fab;
-
     AgendaCalendarView mAgendaCalendarView;
 
+    Context mcontext;
+    final int CALENDAR_PERMISSION = 42;
+    AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,66 +86,30 @@ public class LandingActivity extends AppCompatActivity implements CalendarPicker
         setSupportActionBar(toolbar);
 
         mAgendaCalendarView = (AgendaCalendarView) findViewById(R.id.agenda_calendar_view);
+        mcontext = this;
 
-        // getSupportActionBar().setDisplayShowTitleEnabled(false);
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent myIntent = new Intent(this, AlarmReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(this, 0, myIntent, 0);
 
-//        Calendar cal = Calendar.getInstance();
-//        Intent intent = new Intent(Intent.ACTION_EDIT);
-//        intent.setType("vnd.android.cursor.item/event");
-//        intent.putExtra("beginTime", cal.getTimeInMillis());
-//        intent.putExtra("allDay", true);
-//        intent.putExtra("rrule", "FREQ=YEARLY");
-//        intent.putExtra("endTime", cal.getTimeInMillis() + 60 * 60 * 1000);
-//        intent.putExtra("title", "A Test Event from android app");
-//        startActivity(intent);
-
-//        mWeekView = (WeekView) findViewById(R.id.weekView);
-//        // Show a toast message about the touched event.
-//        mWeekView.setOnEventClickListener(this);
-//        // The week view has infinite scrolling horizontally. We have to provide the events of a
-//        // month every time the month changes on the week view.
-//        mWeekView.setMonthChangeListener(this);
-//        // Set long press listener for events.
-//        mWeekView.setEventLongPressListener(this);
-//        // Set up a date time interpreter to interpret how the date and time will be formatted in
-//        // the week view. This is optional.
 
         fab = (FloatingActionButton) findViewById(R.id.fabButton);
 
         fab.setOnClickListener(this);
 
-        //setupDateTimeInterpreter(false);
-
-
-        //region AgendaCalendarView
-        Calendar minDate = Calendar.getInstance();
-        Calendar maxDate = Calendar.getInstance();
-
-        minDate.add(Calendar.MONTH, -2);
-        minDate.set(Calendar.DAY_OF_MONTH, 1);
-        maxDate.add(Calendar.YEAR, 1);
-
-        List<CalendarEvent> eventList = new ArrayList<>();
-        mockList(eventList);
-
-        mAgendaCalendarView.init(eventList, minDate, maxDate, Locale.getDefault(), this);
-
-        //CalendarManager calendarManager = CalendarManager.getInstance(getApplicationContext());
-        //calendarManager.buildCal(minDate, maxDate, Locale.getDefault(), new DayItem(), new WeekItem());
-        //calendarManager.loadEvents(eventList, new BaseCalendarEvent());
-        ////////
-
-      //  List<CalendarEvent> readyEvents = calendarManager.getEvents();
-//        List<IDayItem> readyDays = calendarManager.getDays();
-//        List<IWeekItem> readyWeeks = calendarManager.getWeeks();
-//       mAgendaCalendarView.init(Locale.getDefault(), readyWeeks, readyDays, readyEvents, this);
-      //  mAgendaCalendarView.addEventRenderer(new DrawableEventRenderer());
-
-
-        //endregion
+//        Calendar calNow = Calendar.getInstance();
+//        Calendar calSet = (Calendar) calNow.clone();
+//
+//        calSet.set(Calendar.HOUR_OF_DAY, 10);
+//        calSet.set(Calendar.MINUTE, 55);
+//        calSet.set(Calendar.SECOND, 0);
+//        calSet.set(Calendar.MILLISECOND, 0);
+//
+//        setAlarm(calSet);
 
 
     }
+
 
     // region Interface - CalendarPickerController
     @Override
@@ -293,7 +256,7 @@ public class LandingActivity extends AppCompatActivity implements CalendarPicker
 
         if (requestCode == CREATE_EVENT) {
 
-            Toast.makeText(getBaseContext(), "Here0", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getBaseContext(), "Here0", Toast.LENGTH_SHORT).show();
             MyEvent myevent = null;
 
             if (responseCode == RESULT_OK) {
@@ -325,7 +288,6 @@ public class LandingActivity extends AppCompatActivity implements CalendarPicker
                 //String intMonth = (String) android.text.format.DateFormat.format("MM", date); //06
                 //String year = (String) android.text.format.DateFormat.format("yyyy", date); //2013
 
-
                 Calendar stime = Calendar.getInstance();
                 stime.set(Calendar.HOUR_OF_DAY, 3);
                 stime.set(Calendar.MINUTE, 0);
@@ -334,32 +296,19 @@ public class LandingActivity extends AppCompatActivity implements CalendarPicker
                 Calendar etime = Calendar.getInstance();
                 etime.add(Calendar.HOUR, 1);
                 etime.set(Calendar.MONTH, 9 - 1);
-                //  WeekViewEvent event = new WeekViewEvent(1, name, stime, etime);
-                //event.setColor(getResources().getColor(R.color.event_color_01));
-                //   events.add(event);
 
 
-//                Calendar sttime = Calendar.getInstance();
-//                sttime.set(Calendar.HOUR_OF_DAY, 3);
-//                sttime.set(Calendar.MINUTE, 30);
-//                sttime.set(Calendar.MONTH, 9 - 1);
-//                sttime.set(Calendar.YEAR, 2016);
-//                Calendar ettime = (Calendar) sttime.clone();
-//                ettime.set(Calendar.HOUR_OF_DAY, 4);
-//                ettime.set(Calendar.MINUTE, 30);
-//                ettime.set(Calendar.MONTH, 9 - 1);
-//                event = new WeekViewEvent(10, getEventTitle(sttime), sttime, ettime);
-//                event.setColor(Color.parseColor("#000000"));
-//                events.add(event);
 
+                //HARDCODED VALUES 10:51
+                Calendar calNow = Calendar.getInstance();
+                Calendar calSet = (Calendar) calNow.clone();
 
-                // Create a new event.
-                //  WeekViewEvent event = new WeekViewEvent(20, name, sdate, edate);
-                //  events.add(event);
+                calSet.set(Calendar.HOUR_OF_DAY, 10);
+                calSet.set(Calendar.MINUTE, 55);
+                calSet.set(Calendar.SECOND, 0);
+                calSet.set(Calendar.MILLISECOND, 0);
 
-
-                // Refresh the week view. onMonthChange will be called again.
-                //    mWeekView.notifyDatasetChanged();
+                setAlarm(calSet);
 
             }
 
@@ -367,89 +316,9 @@ public class LandingActivity extends AppCompatActivity implements CalendarPicker
 
     }
 
-
-    //    private void buidNewGoogleApiClient() {
-//
-//        google_api_client = new GoogleApiClient.Builder(this)
-//                .addConnectionCallbacks(this)
-//                .addOnConnectionFailedListener(this)
-//                .addApi(Plus.API, Plus.PlusOptions.builder().build())
-//                .addScope(Plus.SCOPE_PLUS_LOGIN)
-//                .addScope(Plus.SCOPE_PLUS_PROFILE)
-//                .build();
-//    }
-//
-//
-//
-//    protected void onStart() {
-//        super.onStart();
-//        google_api_client.connect();
-//
-//    }
-//
-//    protected void onStop() {
-//        super.onStop();
-//        if (google_api_client.isConnected()) {
-//            google_api_client.disconnect();
-//        }
-//    }
-//
-//    protected void onResume(){
-//        super.onResume();
-//        if (google_api_client.isConnected()) {
-//            google_api_client.connect();
-//        }
-//    }
-//
-//
-//    @Override
-//    public void onConnectionFailed(ConnectionResult result) {
-//        if (!result.hasResolution()) {
-//            google_api_availability.getErrorDialog(this, result.getErrorCode(), request_code).show();
-//            return;
-//        }
-//    }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int responseCode,
-//                                    Intent intent) {
-//        // Check which request we're responding to
-//        if (requestCode == SIGN_IN_CODE) {
-//            request_code = requestCode;
-//            if (responseCode != RESULT_OK) {
-//                is_signInBtn_clicked = false;
-//            }
-//
-//            is_intent_inprogress = false;
-//
-//            if (!google_api_client.isConnecting()) {
-//                google_api_client.connect();
-//            }
-//        }
-//
-//    }
-//
-//
-//    private void gPlusSignOut() {
-//        if (google_api_client.isConnected()) {
-//            Plus.AccountApi.clearDefaultAccount(google_api_client);
-//            google_api_client.disconnect();
-//            google_api_client.connect();
-//
-//        }
-//    }
-//
-//    @Override
-//    public void onConnected(Bundle arg0) {
-//        is_signInBtn_clicked = false;
-//
-//    }
-//
-//    @Override
-//    public void onConnectionSuspended(int arg0) {
-//        google_api_client.connect();
-//
-//    }
+    private void setAlarm(Calendar targetcal) {
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, targetcal.getTimeInMillis(), pendingIntent);
+    }
 
 
     @Override

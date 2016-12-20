@@ -5,13 +5,6 @@ import android.util.Log;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
-import java.io.IOException;
-
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-
 /**
  * Created by filipp on 5/23/2016.
  */
@@ -29,22 +22,22 @@ public class FirebaseInstanceIDService extends FirebaseInstanceIdService {
 
     private void registerToken(String token) {
 
-        OkHttpClient client = new OkHttpClient();
-        RequestBody body = new FormBody.Builder()
-                .add("Token",token)
-                .build();
-
-        Request request = new Request.Builder()
-              //  .addHeader("Accept", "application/json")// .addHeader("Content-Type", "text/html")
-                .url("http://192.168.197.1/fcmphp/register.php?")
-                .post(body)
-                .build();
-       Log.d("sd", "sd" + request);
-        try {
-            client.newCall(request).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        OkHttpClient client = new OkHttpClient();
+//        RequestBody body = new FormBody.Builder()
+//                .add("Token",token)
+//                .build();
+//
+//        Request request = new Request.Builder()
+//              //  .addHeader("Accept", "application/json")// .addHeader("Content-Type", "text/html")
+//                .url("http://192.168.197.1/fcmphp/register.php?")
+//                .post(body)
+//                .build();
+//       Log.d("sd", "sd" + request);
+//        try {
+//            client.newCall(request).execute();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         // Create http cliient object to send request to server
 //
